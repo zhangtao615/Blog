@@ -18,6 +18,10 @@
   }
   &-info {
     margin: 10px 0;
+    &-item {
+      display: flex;
+      align-items: center;
+    }
     &-date {
       display: inline-block;
       color: #ff4e6a;

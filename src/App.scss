@@ -33,36 +33,25 @@
         height: 48px;
         box-sizing: border-box;
         border-radius: 15px;
-        color: #9ca2ab;
+        color: #9ca2a8;
+        font-weight: 500;
+        font-size: 16px;
+        justify-content: center;
         &:hover {
           cursor: pointer;
           background-color: rgba(0, 0, 0, 0.08);
           width: 200px;
           transition: ease 0.35;
         }
-        &-icon {
-          & > img {
-            line-height: 48px;
-          }
-        }
-        &-content {
-          font-size: 16px;
-          width: 100px;
-          text-align: center;
-          line-height: 48px;
-          color: #9ca2ab;
+        i {
+          margin-right: 20px;
         }
       }
       .active {
         background-color: #ff4e6a;
         box-shadow: 0 2px 12px #ff4e6a;
+        color: #fff!important;
         width: 200px;
-        svg path {
-          stroke: #f1f2f3!important;
-        }
-        a {
-          color: #f1f2f3!important;
-        }
       }
     }
   }

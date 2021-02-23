@@ -1,12 +1,33 @@
-import React , { FC } from 'react';
+import React , { useRef, useEffect, useState } from 'react';
+import axios from 'axios'
+import useKeypress from '../../hooks/useKeyPress'
 import './SiderBar.scss';
 
-const SiderBar:FC = () => {
+const SiderBar = () => {
+  const [inputActive, setinputActive] = useState(false);
+  const enterPressed = useKeypress(13);
+  let searchValue = useRef(null)
+  const searchArticle = (val) => {
+    axios.get('/api/search_article.json').then(res => {
+      console.log(res)
+    })
+  }
+  useEffect(() => {
+    if (enterPressed && inputActive) {
+      searchArticle(searchValue.current.value)
+    }
+  }, [inputActive, enterPressed])
   return (
     <div className="sider-bar">
       {/* 搜索文章 */}
       <div className="search">
-        <input type="span" placeholder="搜索文章"/>
+        <input 
+          type="text" 
+          placeholder="搜索文章"
+          onFocus={() => {setinputActive(true)}}
+          onBlur={() => {setinputActive(false)}}
+          ref={searchValue}
+        />
       </div>
       {/* 文章类型 */}
       <div className="category">

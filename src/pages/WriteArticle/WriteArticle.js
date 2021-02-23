@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-const WriteArticle:FC = () => {
+const WriteArticle = () => {
   return (
     <div>写文章</div>
   )
