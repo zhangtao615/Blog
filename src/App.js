@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SiderBar from './components/SiderBar/SiderBar';
 import Article from './components/Article/Article';
-// import WriteArticle from './pages/WriteArticle/WriteArticle';
+import WriteArticle from './pages/WriteArticle/WriteArticle';
 import About from './pages/About/About';
 import Detail from './pages/Detail/Detail'
 import {
@@ -48,12 +48,14 @@ const App = () => {
               <Route exact path="/" component={Article} />
               <Route exact path="/about" component={About} />
               <Route exact path="/detail/:id" component={Detail} />
+              <Route exact path="/write" component={WriteArticle} />
             </div>
-        
           <div className="others">
-            <div className="write-article">
-              <div className="write-article-btn">写文章</div>
-            </div>
+            <Link to="/write">
+              <div className="write-article">
+                <div className="write-article-btn">写文章</div>
+              </div>
+            </Link>
             <div className="visitor">
               <div className="visitor-avatar">
                 <img src='https://github.com/zhangtao615/blog/blob/main/src/statics/default_avatar.png?raw=true' alt=""/>

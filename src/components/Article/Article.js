@@ -9,8 +9,10 @@ const Article = () => {
     axios.get('http://localhost:8080/api/blog/getBlogList')
     .then(res => {
       setList(res.data.data)
+    }).catch(err => {
+      console.error(err)
     })
-  })
+  }, [])
   return (
     <Fragment>
       { list &&

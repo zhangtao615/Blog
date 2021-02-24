@@ -56,7 +56,7 @@
     }
   }
   .article-part {
-    // width: 910px;
+    max-width: 910px;
     height: 100vh;
     flex: auto;
     overflow-y: auto;
