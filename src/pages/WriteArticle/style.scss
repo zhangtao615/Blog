@@ -1,8 +1,7 @@
 .write-wrapper {
   width: 100%;
-  padding: 20px 15px;
+  padding: 20px 10px;
   box-sizing: border-box;
-  margin-bottom: 50px;
   .blog {
     margin-bottom: 20px;
     font-size: 18px;
@@ -19,33 +18,12 @@
         font-weight: 700;
       }
     }
-    // .create-tags {
-    //   margin-left: 100px;
-    //   height: 38px;
-    //   width: 100px;
-    //   text-align: center;
-    //   line-height: 38px;
-    //   background-color: #FF4E6A;
-    //   border: none;
-    //   color: #fff;
-    //   border-radius: 5px;
-    //   font-size: 16px;
-    //   &:focus {
-    //     border: none;
-    //     outline: none;
-    //   }
-    //   &:hover {
-    //     background: rgba(255, 78, 106, 0.8);
-    //   }
-    // }
   }
   .editor {
-    border: 1px solid #ccc;
     border-radius: 5px;
   }
   .addition {
     width: 100%;
-    height: 500px;
     overflow: hidden;
     .publish {
       margin: 20px 0;
@@ -81,7 +59,7 @@
         flex: 10;
         position: relative;
         &-input {
-          width: 60%;
+          width: 40%;
           height: 38px;
           border: 1px solid #ccc;
           padding: 5px 15px;
@@ -92,19 +70,57 @@
         &-card {
           position: absolute;
           z-index: 999;
-          width: 60%;
-          height: 150px;
+          width: 40%;
+          height: 100px;
           border-radius: 5px;
           border: 1px solid #ccc;
-          overflow-y: hidden;
+          overflow-y: auto;
           margin-top: 5px;
           transition: all .2s;
           opacity: 0;
+          visibility: hidden;
+          &-item {
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+            padding: 0 10px;
+            box-sizing: border-box;
+            cursor: pointer;
+            &:hover {
+              background: #f7f8f9;
+            }
+          }
+          &-none {
+            margin: 0 auto;
+          }
         }
       }
       .show {
         opacity: 1;
         transition: all .2s;
+        visibility: visible;
+        z-index: 9999;
+        background-color: #fff;
+      }
+    }
+    .banner {
+      display: flex;
+      margin-top: 10px;
+      &-title {
+        flex: 1;
+        height: 38px;
+        line-height: 38px;
+        margin-right: 4px;
+      }
+      &-input {
+        flex: 10;
+        width: 40%;
+        height: 38px;
+        border: 1px solid #ccc;
+        padding: 5px 15px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        outline: none;
       }
     }
   }

@@ -4,6 +4,8 @@ import Article from './components/Article/Article';
 import WriteArticle from './pages/WriteArticle/WriteArticle';
 import About from './pages/About/About';
 import Detail from './pages/Detail/Detail'
+import Login from './pages/Login/Login'
+import Reg from './pages/Reg/Reg'
 import {
   BrowserRouter as Router,
   Route,
@@ -14,6 +16,7 @@ import './style/reset.css';
 
 const App = () => {
   const [active, setActive] = useState(1)
+  const [isLogin, setIsLogin] = useState(false)
   useEffect (() => {
 
   })
@@ -49,6 +52,8 @@ const App = () => {
               <Route exact path="/about" component={About} />
               <Route exact path="/detail/:id" component={Detail} />
               <Route exact path="/write" component={WriteArticle} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/reg" component={Reg} />
             </div>
           <div className="others">
             <Link to="/write">
@@ -58,13 +63,19 @@ const App = () => {
             </Link>
             <div className="visitor">
               <div className="visitor-avatar">
-                <img src='https://github.com/zhangtao615/blog/blob/main/src/statics/default_avatar.png?raw=true' alt=""/>
+                <img src={
+                  isLogin ? 'https://github.com/zhangtao615/blog/blob/main/src/statics/avatar.png?raw=true' : 'https://github.com/zhangtao615/blog/blob/main/src/statics/default_avatar.png?raw=true'
+                } alt=""/>
               </div>
               <div className="visitor-name">未登录</div>
-              <div className="visitor-like visitor-item">个人中心</div>
-              <div className="visitor-collect visitor-item">我收藏的</div>
-              <div className="visitor-login visitor-item">填写建议</div>
-              <div className="visitor-logou visitor-item">登录</div>
+              <div className="visitor-operation">
+                <Link to="/login">
+                  <div className="login visitor-item">登录</div>
+                </Link>
+                <Link to='/reg'>
+                  <div className="reg visitor-item">注册</div>
+                </Link>
+              </div>
               <div className="visitor-logout visitor-item">退出登录</div>
             </div>
             <div className="back-to-top"></div>

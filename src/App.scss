@@ -123,6 +123,29 @@
         font-weight: 400;
         text-align: center;
       }
+      &-operation {
+        margin: 20px;
+        display: flex;
+        justify-content: center;
+        .login,
+        .reg {
+          width: 60px;
+          height: 30px;
+          line-height: 30px;
+          border: 1px solid #ff4e6a;
+          border-radius: 3px;
+          color: #ff4e6a;
+          &:hover {
+            background: rgba(255,78,106, .1);
+          }
+        }
+        .login {
+          margin-right: 5px;
+        }
+        .reg {
+          margin-left: 5px;
+        }
+      }
     }
     .back-to-top {
       position: fixed;

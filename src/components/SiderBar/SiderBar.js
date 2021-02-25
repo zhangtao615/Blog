@@ -53,15 +53,6 @@ const SiderBar = () => {
           </li>
         </ul>
       </div>
-      {/* 标签 */}
-      <div className="tags">
-        <span className="tags-item">HTML</span>
-        <span className="tags-item">CSS</span>
-        <span className="tags-item">JavaScript</span>
-        <span className="tags-item">TypeScript</span>
-        <span className="tags-item">Vue</span>
-        <span className="tags-item">React</span>
-      </div>
     </div>
   )
 }
