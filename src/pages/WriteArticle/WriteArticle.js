@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
@@ -9,7 +9,9 @@ const WriteArticle = () => {
   const [tagList, setTagList] = useState([])
   const [selectedTag, setSelectedTag] = useState('')
   const [content, setContent] = useState('')
-  let editorVal = ''
+  let articleTitle = useRef('')
+  let tag = useRef('')
+  let banner = useRef('')
   // 获取标签列表
   const getTagList = () => {
     axios({
@@ -34,6 +36,7 @@ const WriteArticle = () => {
   // 选择标签
   const selectTag = (id) => {
     setSelectedTag(id)
+    tag.current.value = id
   }
   const saveContent = () => {
     
@@ -48,6 +51,7 @@ const WriteArticle = () => {
           className="input-title" 
           type="text"
           placeholder="请输入文章标题"
+          ref={articleTitle}
         ></input>
       </header>
       <div className="editor">
@@ -69,6 +73,7 @@ const WriteArticle = () => {
               placeholder="选择或创建标签"
               onFocus={() => {setShowCard(true); getTagList()}}
               onBlur={() => {setShowCard(false)}}
+              ref={tag}
              />
             <div className={showCard ? "tag-select-card show" : "tag-select-card"}>
               { tagList &&
@@ -98,6 +103,7 @@ const WriteArticle = () => {
             type="text"
             className="banner-input"
             placeholder="请输入图片链接"
+            ref={banner}
           />
         </div>
         <div className="publish">

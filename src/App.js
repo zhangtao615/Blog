@@ -11,6 +11,8 @@ import {
   Route,
   Link,
 } from "react-router-dom";
+import avatar from './static/avatar.png'
+import defaultAvatar from './static/default_avatar.png'
 import './App.scss';
 import './style/reset.css';
 
@@ -24,7 +26,7 @@ const App = () => {
       <div className="warpper">
         <Router>
           <div className="personal-info">
-            <img className="avatar" src='https://github.com/zhangtao615/blog/blob/main/src/statics/avatar.png?raw=true' alt=""/>
+            <img className="avatar" src={avatar} alt=""/>
               <div className="menus">
                 <Link to="/">
                   <div 
@@ -64,7 +66,7 @@ const App = () => {
             <div className="visitor">
               <div className="visitor-avatar">
                 <img src={
-                  isLogin ? 'https://github.com/zhangtao615/blog/blob/main/src/statics/avatar.png?raw=true' : 'https://github.com/zhangtao615/blog/blob/main/src/statics/default_avatar.png?raw=true'
+                  isLogin ? avatar : defaultAvatar
                 } alt=""/>
               </div>
               <div className="visitor-name">未登录</div>
@@ -78,7 +80,7 @@ const App = () => {
               </div>
               <div className="visitor-logout visitor-item">退出登录</div>
             </div>
-            <div className="back-to-top"></div>
+            <div className="back-to-top"><i className="iconfont">&#xe87b;</i></div>
           </div>
         </Router>
       </div>
