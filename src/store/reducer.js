@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import * as actionTypes from './actionTypes'
 import { fromJS } from 'immutable'
-const defaultState =fromJS({
+const defaultState = fromJS({
   article_list: []
 })
 

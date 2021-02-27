@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SiderBar from './components/SiderBar/SiderBar';
 import Article from './components/Article/Article';
 import WriteArticle from './pages/WriteArticle/WriteArticle';
-import About from './pages/About/About';
 import Detail from './pages/Detail/Detail'
 import Login from './pages/Login/Login'
 import Reg from './pages/Reg/Reg'
@@ -17,46 +16,23 @@ import './App.scss';
 import './style/reset.css';
 
 const App = () => {
-  const [active, setActive] = useState(1)
   const [isLogin, setIsLogin] = useState(false)
-  useEffect (() => {
-
-  })
   return (
       <div className="warpper">
         <Router>
           <div className="personal-info">
-            <img className="avatar" src={avatar} alt=""/>
-              <div className="menus">
-                <Link to="/">
-                  <div 
-                    className={active === 1 ? "menus-item active" : "menus-item"}
-                    onClick={() => {setActive(1)}}
-                  >
-                    <i className="iconfont icon">&#xe602;</i> 
-                    <span>回到首页</span>
-                  </div>
-                </Link>
-                <Link to='/about'>
-                  <div 
-                    className={active === 2 ? "menus-item active" : "menus-item"}
-                    onClick={() => {setActive(2)}}
-                  >
-                    <i className="iconfont icon">&#xe600;</i> 
-                    <span>关于博客</span>
-                  </div>
-                </Link>
-              </div>
-              <SiderBar/>
-            </div>
-            <div className="article-part">
-              <Route exact path="/" component={Article} />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/detail/:id" component={Detail} />
-              <Route exact path="/write" component={WriteArticle} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/reg" component={Reg} />
-            </div>
+            <Link to="/">
+              <img className="avatar" src={avatar} alt="" style={{cursor:'pointer'}}/>
+            </Link>
+            <SiderBar/>
+          </div>
+          <div className="article-part">
+            <Route exact path="/" component={Article} />
+            <Route exact path="/detail/:id" component={Detail} />
+            <Route exact path="/write" component={WriteArticle} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/reg" component={Reg} />
+          </div>
           <div className="others">
             <Link to="/write">
               <div className="write-article">
@@ -80,7 +56,7 @@ const App = () => {
               </div>
               <div className="visitor-logout visitor-item">退出登录</div>
             </div>
-            <div className="back-to-top"><i className="iconfont">&#xe87b;</i></div>
+            { /**<div className="back-to-top"><i className="iconfont">&#xe87b;</i></div>*/ }
           </div>
         </Router>
       </div>
