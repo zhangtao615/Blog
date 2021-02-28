@@ -10,17 +10,14 @@ import {
   Route,
   Link,
 } from "react-router-dom";
-import { Provider } from 'react-redux'
-import store from './store'
 import avatar from './static/avatar.png'
 import defaultAvatar from './static/default_avatar.png'
+import 'element-theme-default';
 import './App.scss';
-import './style/reset.css';
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false)
   return (
-    <Provider store={store}>
       <div className="warpper">
         <Router>
           <div className="personal-info">
@@ -63,7 +60,6 @@ const App = () => {
           </div>
         </Router>
       </div>
-     </Provider>
   );
 }
 

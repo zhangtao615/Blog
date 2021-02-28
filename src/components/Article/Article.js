@@ -1,16 +1,25 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom'
+import store from '../../store'
+import { getArticleListAction } from '../../store/actionCreators'
 import './Article.scss';
 
-const Article = () => {
-  const [list, setList] = useState([])
-  useEffect(() => {
-    
-  }, [])
-  return (
-    <Fragment>
-      { list &&
-        list.map(item => {
+class Article extends Component {
+  constructor (props) {
+    super(props)
+    this.state = store.getState()
+    this.handleStoreChange = this.handleStoreChange.bind(this)
+  }
+  componentDidMount() {
+    store.subscribe(this.handleStoreChange)
+    store.dispatch(getArticleListAction())
+  }
+  render() {
+    const {  article_list } = this.state
+    return (
+      <Fragment>
+      { article_list &&
+        article_list.map(item => {
           return (
             <div className="article" key={item.id}>
               <Link to={'/detail/' + item.id }>
@@ -34,7 +43,11 @@ const Article = () => {
         })
       }
     </Fragment>
-  )
-};
+    )
+  }
+  handleStoreChange () {
+    this.setState(store.getState())
+  }
+}
 
 export default Article;

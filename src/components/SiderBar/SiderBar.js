@@ -1,26 +1,24 @@
 import React , { useRef, useEffect, useState } from 'react';
-import axios from 'axios'
+import { searchArticleAction } from '../../store/actionCreators'
+import store from '../../store'
 import useKeypress from '../../hooks/useKeyPress'
 import './SiderBar.scss';
 
 const SiderBar = () => {
   const [inputActive, setinputActive] = useState(false);
+  const [storeData, setStoreData] = useState({})
   const enterPressed = useKeypress(13);
   let searchValue = useRef(null)
-  const searchArticle = (val) => {
-    axios({
-      method: "GET",
-      url: "http://localhost:8080/api/blog/getBlogList",
-      params: {
-        keyword: val
-      }
-    }).then(res => {
-      
-    })
+  const handleStoreChange = () => {
+    setStoreData(store.getState())
   }
   useEffect(() => {
+    handleStoreChange()
+  }, [])
+  useEffect(() => {
     if (enterPressed && inputActive) {
-      searchArticle(searchValue.current.value)
+      store.dispatch(searchArticleAction(searchValue.current.value))
+      searchValue.current.value = ''
     }
   }, [inputActive, enterPressed])
   return (

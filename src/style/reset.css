@@ -604,3 +604,6 @@ audio:not([controls]) {
 a {
   text-decoration: none;
 }
+a:focus {
+  outline:none
+}

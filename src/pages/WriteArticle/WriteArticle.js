@@ -36,7 +36,12 @@ const WriteArticle = () => {
   // 选择标签
   const selectTag = (id) => {
     setSelectedTag(id)
-    tag.current.value = id
+    tagList.map(item => {
+      if (item.id === id) {
+        tag.current.value = item.tag
+      }
+    })
+    // tag.current.value = tagList[id]
   }
   const saveContent = () => {
     
