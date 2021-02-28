@@ -3,11 +3,10 @@ import axios from 'axios'
 import useKeypress from '../../hooks/useKeyPress'
 import './SiderBar.scss';
 
-const SiderBar = (props) => {
+const SiderBar = () => {
   const [inputActive, setinputActive] = useState(false);
   const enterPressed = useKeypress(13);
   let searchValue = useRef(null)
-  console.log(props)
   const searchArticle = (val) => {
     axios({
       method: "GET",
@@ -16,7 +15,7 @@ const SiderBar = (props) => {
         keyword: val
       }
     }).then(res => {
-      let data = res.data.data
+      
     })
   }
   useEffect(() => {
@@ -63,5 +62,4 @@ const SiderBar = (props) => {
     </div>
   )
 }
-
 export default SiderBar;

@@ -1,17 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import axios from 'axios'
 import { Link } from 'react-router-dom'
 import './Article.scss';
 
 const Article = () => {
   const [list, setList] = useState([])
   useEffect(() => {
-    axios.get('http://localhost:8080/api/blog/getBlogList')
-    .then(res => {
-      setList(res.data.data)
-    }).catch(err => {
-      console.error(err)
-    })
+    
   }, [])
   return (
     <Fragment>
