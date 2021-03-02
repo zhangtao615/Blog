@@ -28,13 +28,10 @@ class Article extends Component {
               </Link>
               <ul className="article-info">
                 <li className="article-info-date article-info-item">
-                <i className="iconfont">&#xe774;</i> <span className="date">{item.createTime}</span>
+                  <i className="iconfont">&#xe774;</i> <span className="date">{item.createTime}</span>
                 </li>
-                <li className="article-info-count article-info-item">
-                  <i className="iconfont">&#xe661;</i> <span className="count">{item.wordsCount}字</span>
-                </li>
-                <li className="article-info-time article-info-item">
-                <i className="iconfont">&#xe601;</i> <span className="time">大概{item.readTime}分钟</span>
+                <li className="article-info-tag article-info-item">
+                  <i className="iconfont">&#xe661;</i> <span className="tag">{item.tag}</span>
                 </li>
               </ul>
               <p className="article-summariz">{item.description}</p>

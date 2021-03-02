@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
+import E from 'wangeditor'
+import useKeypress from '../../hooks/useKeyPress'
 import './style.scss'
 
+let editor = null
 const WriteArticle = () => {
   const [showCard, setShowCard] = useState(false)
   const [tagList, setTagList] = useState([])
+  const [inputActive, setInputActive] = useState(false)
   const [selectedTag, setSelectedTag] = useState('')
   const [content, setContent] = useState('')
-  let articleTitle = useRef('')
-  let tag = useRef('')
-  let banner = useRef('')
+  const enterPressed = useKeypress(13);
+  let articleTitle = useRef('') // 文章标题
+  let tag = useRef('') // 文章标签
+  let banner = useRef('') // 文章封面
+  let desc = useRef('') // 文章描述
   // 获取标签列表
   const getTagList = () => {
     axios({
@@ -22,32 +26,48 @@ const WriteArticle = () => {
     })
   }
   // 创建标签
-  const createTag = () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const createTag = (tag) => {
     axios({
       method: 'POST',
       url: 'http://localhost:8080/api/tag/createTag',
       data: {
-        tag: 'test'
+        tag: tag
       }
-    }).then (res => {
-      console.log(res)
+    }).then (() => {
+      getTagList()
+      setSelectedTag(tag)
     })
   }
   // 选择标签
   const selectTag = (id) => {
-    setSelectedTag(id)
     tagList.map(item => {
       if (item.id === id) {
         tag.current.value = item.tag
+        setSelectedTag(item.tag)
       }
     })
-    // tag.current.value = tagList[id]
   }
   const saveContent = () => {
-    
+    let time = new Date()
+    console.log(time.toUTCString())
   }
   useEffect (() => {
-    
+    if (enterPressed && inputActive) {
+      if (tag.current.value !== '') {
+        createTag(tag.current.value)
+      }
+    }
+  }, [createTag, enterPressed, inputActive])
+  useEffect(() => {
+    editor = new E("#wang-editor")
+    editor.config.onchange = (newHtml) => {
+      setContent(newHtml)
+    }
+    editor.create()
+    return () => {
+      editor.destroy()
+    }
   }, [])
   return (
     <div className="write-wrapper">
@@ -60,13 +80,7 @@ const WriteArticle = () => {
         ></input>
       </header>
       <div className="editor">
-      <SimpleMDE
-        id="editor"
-        options={{
-          autofocus: true,
-          spellChecker: false
-        }}
-      />
+        <div id='wang-editor'></div>
       </div>
       <footer className="addition">
         <div className="tag">
@@ -76,8 +90,8 @@ const WriteArticle = () => {
               className="tag-select-input"
               type="text"
               placeholder="选择或创建标签"
-              onFocus={() => {setShowCard(true); getTagList()}}
-              onBlur={() => {setShowCard(false)}}
+              onFocus={() => {setShowCard(true); getTagList(); setInputActive(true)}}
+              onBlur={() => {setShowCard(false); setInputActive(false)}}
               ref={tag}
              />
             <div className={showCard ? "tag-select-card show" : "tag-select-card"}>
@@ -109,6 +123,15 @@ const WriteArticle = () => {
             className="banner-input"
             placeholder="请输入图片链接"
             ref={banner}
+          />
+        </div>
+        <div className="desc">
+          <span className="desc-title">文章描述</span>
+          <input 
+            type="text"
+            className="desc-input"
+            placeholder="请输入文章描述"
+            ref={desc}
           />
         </div>
         <div className="publish">

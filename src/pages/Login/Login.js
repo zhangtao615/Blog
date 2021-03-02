@@ -1,23 +1,44 @@
 import React, { useRef } from 'react'
+import store from '../../store'
+import { loginSuccessAction } from '../../store/actionCreators'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom' 
 import './style.scss'
 
 const Login = () => {
   const username = useRef('')
   const password = useRef('')
-  const login = () => {
+  let history = useHistory();
+  const handleLogin = (username, password) => {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "post",
+        url: 'http://localhost:8080/api/user/login',
+        data: {
+          username: username,
+          password: password
+        }
+      }).then(res => {
+        if (res.data.status === 'ok') {
+          resolve({
+            data: res.data
+          })
+          // dispatch(isLoginAction(res.data))
+        } else {
+          reject(res)
+        }
+      })
+    })
+  }
+  const loginBtn = async() => {
     let user = username.current.value
     let pass = password.current.value
-    axios({
-      method: "post",
-      url: 'http://localhost:8080/api/user/login',
-      data: {
-        username: user,
-        password: pass
-      }
-    }).then(res => {
-      console.log(res)
-    })
+    const res = await handleLogin(user, pass)
+    console.log(res.data.status)
+    if (res.data.status === 'ok') {
+      store.dispatch(loginSuccessAction(res.data))
+      history.push('/')
+    }
   }
   return (
     <div className="login-wrapper">
@@ -35,7 +56,7 @@ const Login = () => {
             <input className="ipt" ref={password} type="password" placeholder="请输入密码" />
           </div>
           <div className="card-operation-submit">
-            <button type="submit" className="card-operation-submit-btn" onClick={() => {login()}}>登录</button>
+            <button type="submit" className="card-operation-submit-btn" onClick={() => {loginBtn()}}>登录</button>
           </div>
         </div>
       </div>

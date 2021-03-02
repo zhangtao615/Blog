@@ -8,18 +8,18 @@ const Reg = () => {
   let repPassword = useRef('')
   const [showTip, setShowTip] = useState(false)
   const userReg = () => {
-    let usern = username.current.value
+    let name = username.current.value
     let pass = password.current.value
     // let repPass = repPassword.current.value
     axios({
       method: "post",
       url: 'http://localhost:8080/api/user/reg',
       data: {
-        username: usern,
+        username: name,
         password: pass
       }
     }).then(res => {
-      console.log(res)
+
     })
   }
   const comparePass = () => {
@@ -30,7 +30,20 @@ const Reg = () => {
     } else {
       setShowTip(false)
     }
-    console.log(showTip)
+  }
+  const checkUsername = () => {
+    let name = username.current.value
+    if (name.trim() !== '') {
+      axios({
+        method: 'post',
+        url: 'http://localhost:8080/api/user/checkName',
+        data: {
+          username: name
+        }
+      }).then(res => {
+        
+      })
+    }
   }
   return (
     <div className="reg-wrapper">
@@ -41,7 +54,7 @@ const Reg = () => {
         <div className="card-operation">
           <div className="card-operation-username">
             <i className="iconfont icon">&#xe60f;</i>
-            <input className="ipt" type="text" placeholder="请输入用户名" ref={username} />
+            <input className="ipt" type="text" placeholder="请输入用户名" ref={username} onBlur={() => {checkUsername()}} />
           </div>
           <div className="card-operation-password">
             <i className="iconfont icon">&#xe608;</i>

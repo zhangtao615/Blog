@@ -1,4 +1,4 @@
-import { GET_ARTICLE_LIST, INIT_ARTICLE_LIST, SEARCH_ARTICLE } from './actionTypes'
+import { INIT_ARTICLE_LIST, IS_LOGIN, LOGOUT, LOGIN_SUCCESS } from './actionTypes'
 import axios from 'axios'
 
 export const initArticleListAction = (data) => ({
@@ -28,5 +28,17 @@ export const searchArticleAction = (value) => {
       dispatch(initArticleListAction(data))
     })
   }
-   
 }
+export const isLoginAction = (data) => ({
+  type: IS_LOGIN,
+  data
+})
+
+export const loginSuccessAction = (data) => ({
+  type: LOGIN_SUCCESS,
+  data
+})
+
+export const logoutAction = () => ({
+  type: LOGOUT
+})

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SiderBar from './components/SiderBar/SiderBar';
 import Article from './components/Article/Article';
+import Others from './components/Others/Others';
 import WriteArticle from './pages/WriteArticle/WriteArticle';
 import Detail from './pages/Detail/Detail'
 import Login from './pages/Login/Login'
@@ -11,12 +12,9 @@ import {
   Link,
 } from "react-router-dom";
 import avatar from './static/avatar.png'
-import defaultAvatar from './static/default_avatar.png'
-import 'element-theme-default';
 import './App.scss';
 
 const App = () => {
-  const [isLogin, setIsLogin] = useState(false)
   return (
       <div className="warpper">
         <Router>
@@ -33,31 +31,7 @@ const App = () => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/reg" component={Reg} />
           </div>
-          <div className="others">
-            <Link to="/write">
-              <div className="write-article">
-                <div className="write-article-btn">写文章</div>
-              </div>
-            </Link>
-            <div className="visitor">
-              <div className="visitor-avatar">
-                <img src={
-                  isLogin ? avatar : defaultAvatar
-                } alt=""/>
-              </div>
-              <div className="visitor-name">未登录</div>
-              <div className="visitor-operation">
-                <Link to="/login">
-                  <div className="login visitor-item">登录</div>
-                </Link>
-                <Link to='/reg'>
-                  <div className="reg visitor-item">注册</div>
-                </Link>
-              </div>
-              <div className="visitor-logout visitor-item">退出登录</div>
-            </div>
-            { /**<div className="back-to-top"><i className="iconfont">&#xe87b;</i></div>*/ }
-          </div>
+          <Others />
         </Router>
       </div>
   );
