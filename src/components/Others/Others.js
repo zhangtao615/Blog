@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { message } from 'antd'
 import avatar from '../../static/avatar.png'
 import defaultAvatar from '../../static/default_avatar.png'
 import store from '../../store'
@@ -20,11 +21,13 @@ class Others extends Component {
     const { isLogin, username } = this.state
     return (
       <div className="others">
-        <Link to="/write">
-          <div className="write-article">
-            <div className="write-article-btn">写文章</div>
-          </div>
-        </Link>
+        { username === 'test' &&
+          <Link to="/write">
+            <div className="write-article">
+              <div className="write-article-btn">写文章</div>
+            </div>
+          </Link>
+        }
         <div className="visitor">
           <div className="visitor-avatar">
             <img src={
@@ -55,6 +58,7 @@ class Others extends Component {
   }
   handleLogout() {
     store.dispatch(logoutAction())
+    message.success('退出登录', 3)
   }
 }
 export default Others

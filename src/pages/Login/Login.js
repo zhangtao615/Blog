@@ -3,42 +3,49 @@ import store from '../../store'
 import { loginSuccessAction } from '../../store/actionCreators'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom' 
+import { message } from 'antd';
+import cryp from '../../utils/cryp'
 import './style.scss'
 
 const Login = () => {
   const username = useRef('')
   const password = useRef('')
   let history = useHistory();
-  const handleLogin = (username, password) => {
+  const handleLogin = async(username, password) => {
+    const crypPassword = cryp(password)
     return new Promise((resolve, reject) => {
       axios({
         method: "post",
         url: 'http://localhost:8080/api/user/login',
         data: {
           username: username,
-          password: password
+          password: crypPassword
         }
       }).then(res => {
-        if (res.data.status === 'ok') {
-          resolve({
-            data: res.data
-          })
-          // dispatch(isLoginAction(res.data))
-        } else {
-          reject(res)
-        }
+        resolve(res.data)
       })
     })
+      
   }
   const loginBtn = async() => {
-    let user = username.current.value
+    let name = username.current.value
     let pass = password.current.value
-    const res = await handleLogin(user, pass)
-    console.log(res.data.status)
-    if (res.data.status === 'ok') {
-      store.dispatch(loginSuccessAction(res.data))
-      history.push('/')
+    if (name && pass) {
+      const res = await handleLogin(name, pass)
+      console.log(res)
+      if (res.status === 'ok') {
+        store.dispatch(loginSuccessAction(res))
+        message.success('登录成功', 3)
+        history.push('/')
+      } else {
+        message.error('用户名或密码错误', 3)
+      }
+    } else if (!name) {
+      message.warn('用户名未填写')
+    } else {
+      message.warn('密码未填写')
     }
+    
   }
   return (
     <div className="login-wrapper">

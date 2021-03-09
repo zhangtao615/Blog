@@ -4,7 +4,8 @@ import { INIT_ARTICLE_LIST, SEARCH_ARTICLE, LOGIN_SUCCESS, LOGOUT } from './acti
 const defaultState = {
   article_list: [],
   isLogin: false,
-  username: ''
+  username: '',
+  id: null
 }
 
 export default (state = defaultState, action) => {
@@ -17,12 +18,15 @@ export default (state = defaultState, action) => {
       newState.article_list = action.data
       return newState
     case LOGIN_SUCCESS:
+      const {username, id} = action.data.data
       newState.isLogin = true
-      newState.username = action.data.message
+      newState.username = username
+      newState.id = id
       return newState
     case LOGOUT:
       newState.isLogin = false
       newState.username = ''
+      newState.id = null
       return newState
     default:
       return state

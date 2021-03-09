@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Comment from '../../components/Comment/Comment'
 import './style.scss'
 
 const Detail = () => {
   const [article, setArticle] = useState({})
+  let id = window.location.href.split('/').pop()
   useEffect(() => {
     const id = window.location.href.split('/').pop()
     axios.get('http://localhost:8080/api/blog/getBlogDetail?id=' + id)
@@ -21,10 +23,7 @@ const Detail = () => {
         <i className="iconfont">&#xe774;</i> <span className="date">{article.createTime}</span>
         </li>
         <li className="header-info-count header-info-item">
-          <i className="iconfont">&#xe661;</i> <span className="count">{article.wordsCount}字</span>
-        </li>
-        <li className="header-info-time header-info-item">
-        <i className="iconfont">&#xe601;</i> <span className="time">大概{article.readTime}分钟</span>
+          <i className="iconfont">&#xe661;</i> <span className="count">{article.tag}</span>
         </li>
       </ul>
       </header>
@@ -32,7 +31,7 @@ const Detail = () => {
         {article.content}
       </article>  
       <footer className="comment">
-
+        <Comment id={id}/>
       </footer>
     </div>
   )

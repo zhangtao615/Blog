@@ -1,27 +1,37 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios'
+import cryp from '../../utils/cryp'
+import { message } from 'antd';
+import { useHistory } from 'react-router-dom' 
 import './style.scss'
 
 const Reg = () => {
   let username = useRef('')
   let password = useRef('')
   let repPassword = useRef('')
+  let history = useHistory();
   const [showTip, setShowTip] = useState(false)
+  const [flag, setFlag] = useState(false)
   const userReg = () => {
     let name = username.current.value
     let pass = password.current.value
     // let repPass = repPassword.current.value
+    let crypPassword = cryp(pass)
     axios({
       method: "post",
       url: 'http://localhost:8080/api/user/reg',
       data: {
         username: name,
-        password: pass
+        password: crypPassword
       }
-    }).then(res => {
-
+    }).then(({ data }) => {
+      if (data.status === 'ok') {
+        message.success('注册成功', 1)
+        history.push('/login')
+      }
     })
   }
+  // 判断
   const comparePass = () => {
     let passOne = password.current.value
     let passTwo = repPassword.current.value
@@ -40,8 +50,13 @@ const Reg = () => {
         data: {
           username: name
         }
-      }).then(res => {
-        
+      }).then(({data}) => {
+        if (data.status === 'fail') {
+          message.error(data.message, 3)
+          setFlag(false)
+        } else {
+          setFlag(true)
+        }
       })
     }
   }
