@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Comment from '../../components/Comment/Comment'
+import BlogDetail from '../../components/BlogDetail/BlogDetail'
 import './style.scss'
 
 const Detail = () => {
@@ -28,7 +29,7 @@ const Detail = () => {
       </ul>
       </header>
       <article className="article">
-        {article.content}
+        <BlogDetail detail={article.content} />
       </article>  
       <footer className="comment">
         <Comment id={id}/>

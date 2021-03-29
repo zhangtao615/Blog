@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import E from 'wangeditor'
+import { parse } from 'html-ast-parse-stringify'
 import useKeypress from '../../hooks/useKeyPress'
+import transferDate from '../../utils/date'
 import './style.scss'
 
 let editor = null
@@ -49,8 +51,20 @@ const WriteArticle = () => {
     })
   }
   const saveContent = () => {
-    let time = new Date()
-    console.log(time.toUTCString())
+    let createTime = transferDate()
+    const data = {
+      title: articleTitle.current.value,
+      content: JSON.stringify(parse(content)),
+      tag: selectedTag,
+      createTime: createTime,
+      description: desc.current.value,
+      pic: banner.current.value
+    }
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/api/blog/createBlog',
+      data: data
+    })
   }
   useEffect (() => {
     if (enterPressed && inputActive) {
@@ -58,10 +72,11 @@ const WriteArticle = () => {
         createTag(tag.current.value)
       }
     }
-  }, [createTag, enterPressed, inputActive])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enterPressed, inputActive])
   useEffect(() => {
     editor = new E("#wang-editor")
-    editor.config.onchange = (newHtml) => {
+    editor.config.onchange = function (newHtml) {
       setContent(newHtml)
     }
     editor.create()

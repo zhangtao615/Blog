@@ -4,6 +4,7 @@ import { message } from 'antd'
 import avatar from '../../static/avatar.png'
 import defaultAvatar from '../../static/default_avatar.png'
 import store from '../../store'
+import axios from 'axios'
 import './style.scss'
 import { logoutAction } from '../../store/actionCreators'
 
@@ -21,7 +22,7 @@ class Others extends Component {
     const { isLogin, username } = this.state
     return (
       <div className="others">
-        { username === 'test' &&
+        { username === '7years' &&
           <Link to="/write">
             <div className="write-article">
               <div className="write-article-btn">写文章</div>
@@ -59,6 +60,8 @@ class Others extends Component {
   handleLogout() {
     store.dispatch(logoutAction())
     message.success('退出登录', 3)
+    localStorage.removeItem('token')
+    delete axios.defaults.headers.common.Authorization
   }
 }
 export default Others

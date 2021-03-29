@@ -9,6 +9,7 @@
     "antd": "^4.13.0",
     "axios": "^0.21.1",
     "crypto-js": "^4.0.0",
+    "html-ast-parse-stringify": "^1.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",

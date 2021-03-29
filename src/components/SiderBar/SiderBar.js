@@ -11,7 +11,6 @@ const SiderBar = () => {
   let searchValue = useRef(null)
   const handleStoreChange = () => {
     setStoreData(store.getState())
-    console.log(storeData)
   }
   useEffect(() => {
     handleStoreChange()

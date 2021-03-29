@@ -1,16 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Comment, List } from 'antd'
+import { Comment, List, message } from 'antd'
+import { useHistory } from 'react-router-dom'
 import store from '../../store'
 import './style.scss'
 import axios from '_axios@0.21.1@axios'
 
 const Comments = ({ id }) => {
   let comment = useRef('')
+  let history = useHistory()
   const [btn, setBtn] = useState(true)
   const data = store.getState()
   const CommentsData = [
     {
-      actions: [<span key="delete-commit" onClick={() => {deleteCommit()}}>删除评论</span>],
+      actions: [<span key="comment-basic-reply-to">回复</span>,],
       author: 'Han Solo',
       avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
       content: (
@@ -22,7 +24,7 @@ const Comments = ({ id }) => {
       )
     },
     {
-      actions: [<span key="delete-commit">删除评论</span>],
+      actions: [ <span key="comment-basic-reply-to">回复</span>],
       author: 'Han Solo',
       avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
       content: (
@@ -45,6 +47,13 @@ const Comments = ({ id }) => {
   }
   // 发送评论
   const sendCommit = () => {
+    if (!data.isLogin) {
+      message.warn('未登录, 2s后即将跳转到登陆界面', 2)
+      setTimeout(() => {
+        history.push('/login')
+      }, 2000)
+      return 
+    }
     axios({
       url:'http://localhost:8080/api/user/handleCommit',
       method: 'POST',
@@ -52,15 +61,16 @@ const Comments = ({ id }) => {
         content: comment.current.value,
         author: data.username,
         blogId: id,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+        createTime: Date.parse(new Date())
       }
     }).then(res => {
-      console.log('success')
+      if (res.data.status === 'ok') {
+        message.success('评论成功')
+        comment.current.value = ''
+      } else {
+        message.error('评论成功')
+      }
     })
-  }
-  // 删除评论
-  const deleteCommit = () => {
-    console.log('delete')
   }
   return (
     <div className="comment-wrapper">
