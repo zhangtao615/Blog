@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import E from 'wangeditor'
 import { parse } from 'html-ast-parse-stringify'
 import useKeypress from '../../hooks/useKeyPress'
 import transferDate from '../../utils/date'
 import './style.scss'
+import { message } from '_antd@4.13.0@antd';
+import Upload from '../../components/Upload/Upload'
 
 let editor = null
 const WriteArticle = () => {
@@ -13,10 +16,11 @@ const WriteArticle = () => {
   const [inputActive, setInputActive] = useState(false)
   const [selectedTag, setSelectedTag] = useState('')
   const [content, setContent] = useState('')
+  const [url, setUrl] = useState('')
   const enterPressed = useKeypress(13);
+  let history = useHistory()
   let articleTitle = useRef('') // 文章标题
   let tag = useRef('') // 文章标签
-  let banner = useRef('') // 文章封面
   let desc = useRef('') // 文章描述
   // 获取标签列表
   const getTagList = () => {
@@ -39,6 +43,9 @@ const WriteArticle = () => {
     }).then (() => {
       getTagList()
       setSelectedTag(tag)
+      message.success('标签创建成功')
+    }).catch(e => {
+      message.error('标签创建失败')
     })
   }
   // 选择标签
@@ -50,6 +57,7 @@ const WriteArticle = () => {
       }
     })
   }
+  // 提交博客
   const saveContent = () => {
     let createTime = transferDate()
     const data = {
@@ -58,15 +66,26 @@ const WriteArticle = () => {
       tag: selectedTag,
       createTime: createTime,
       description: desc.current.value,
-      pic: banner.current.value
+      pic: url
     }
     axios({
       method: 'post',
       url: 'http://localhost:8080/api/blog/createBlog',
       data: data
+    }).then(res => {
+      if (res.data.status === 'ok') {
+        message.success('博客创建成功')
+        history.push('/')
+      } else {
+        message.error('博客创建失败')
+      }
     })
   }
+  const getImgurl = (url) => {
+    setUrl(url)
+  }
   useEffect (() => {
+    // 处理键盘enter事件
     if (enterPressed && inputActive) {
       if (tag.current.value !== '') {
         createTag(tag.current.value)
@@ -75,6 +94,7 @@ const WriteArticle = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enterPressed, inputActive])
   useEffect(() => {
+    // 初始化编辑器
     editor = new E("#wang-editor")
     editor.config.onchange = function (newHtml) {
       setContent(newHtml)
@@ -94,6 +114,9 @@ const WriteArticle = () => {
           ref={articleTitle}
         ></input>
       </header>
+      <div className="upload">
+        <Upload getUploadImg={getImgurl} />
+      </div>
       <div className="editor">
         <div id='wang-editor'></div>
       </div>
@@ -130,15 +153,6 @@ const WriteArticle = () => {
               }
             </div>
           </div>
-        </div>
-        <div className="banner">
-          <span className="banner-title">图片封面</span>
-          <input 
-            type="text"
-            className="banner-input"
-            placeholder="请输入图片链接"
-            ref={banner}
-          />
         </div>
         <div className="desc">
           <span className="desc-title">文章描述</span>

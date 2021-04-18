@@ -1,10 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { message } from 'antd'
-import avatar from '../../static/avatar.png'
 import defaultAvatar from '../../static/default_avatar.png'
 import store from '../../store'
-import axios from 'axios'
 import './style.scss'
 import { logoutAction } from '../../store/actionCreators'
 
@@ -19,15 +17,22 @@ class Others extends Component {
     store.subscribe(this.handleStoreChange)
   }
   render() {
-    const { isLogin, username } = this.state
+    const { isLogin, username, avatar } = this.state
     return (
       <div className="others">
-        { username === '7years' &&
-          <Link to="/write">
+        { username === 'admin' &&
+          <Fragment>
             <div className="write-article">
-              <div className="write-article-btn">写文章</div>
+              <Link to="/write">
+                <div className="write-article-btn">写文章</div>
+              </Link>
             </div>
-          </Link>
+            <div className="blog-management">
+              <Link to="/management">
+                <div className="blog-management-btn">博客管理</div>
+              </Link>
+            </div>
+          </Fragment>
         }
         <div className="visitor">
           <div className="visitor-avatar">
@@ -47,10 +52,14 @@ class Others extends Component {
           </div>
           }
           { isLogin &&
-            <div className="visitor-logout visitor-item" onClick={this.handleLogout}>退出登录</div>
+            <>
+              <Link to='/personal'>
+                <div className="visitor-personal visitor-item">个人中心</div>
+              </Link>
+              <div className="visitor-logout visitor-item" onClick={this.handleLogout}>退出登录</div>
+            </>
           }
         </div>
-        { /**<div className="back-to-top"><i className="iconfont">&#xe87b;</i></div>*/ }
       </div>
     )
   }
@@ -60,8 +69,6 @@ class Others extends Component {
   handleLogout() {
     store.dispatch(logoutAction())
     message.success('退出登录', 3)
-    localStorage.removeItem('token')
-    delete axios.defaults.headers.common.Authorization
   }
 }
 export default Others
