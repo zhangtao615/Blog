@@ -6,6 +6,8 @@ import WriteArticle from './pages/WriteArticle/WriteArticle';
 import Detail from './pages/Detail/Detail'
 import Login from './pages/Login/Login'
 import Reg from './pages/Reg/Reg'
+import Management from './pages/Management/Management'
+import Personal from './pages/Personal/Personal'
 import {
   BrowserRouter as Router,
   Route,
@@ -30,6 +32,8 @@ const App = () => {
             <Route exact path="/write" component={WriteArticle} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/reg" component={Reg} />
+            <Route exact path="/management" component={Management} />
+            <Route exact path="/personal" component={Personal} />
           </div>
           <Others />
         </Router>

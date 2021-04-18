@@ -22,7 +22,8 @@ const Reg = () => {
       url: 'http://localhost:8080/api/user/reg',
       data: {
         username: name,
-        password: crypPassword
+        password: crypPassword,
+        avatar: 'https://7years-img.oss-cn-beijing.aliyuncs.com/avatar.png'
       }
     }).then(({ data }) => {
       if (data.status === 'ok') {

@@ -14,13 +14,10 @@ const Login = () => {
   const handleLogin = async(username, password) => {
     const crypPassword = cryp(password)
     return new Promise((resolve, reject) => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`
-      }
       axios({
         method: "post",
         url: 'http://localhost:8080/api/user/login',
+        withCredentials: true,
         data: {
           username: username,
           password: crypPassword
@@ -38,7 +35,6 @@ const Login = () => {
       const res = await handleLogin(name, pass)
       if (res.status === 'ok') {
         store.dispatch(loginSuccessAction(res))
-        localStorage.setItem("token", res.data.token)
         message.success('登录成功', 3)
         history.push('/')
       } else {

@@ -5,7 +5,9 @@ const defaultState = {
   article_list: [],
   isLogin: false,
   username: '',
-  id: null
+  id: null,
+  admin: false,
+  avatar: ''
 }
 
 export default (state = defaultState, action) => {
@@ -18,15 +20,18 @@ export default (state = defaultState, action) => {
       newState.article_list = action.data
       return newState
     case LOGIN_SUCCESS:
-      const {username, id} = action.data.data
+      const {username, id, admin, avatar} = action.data.data
       newState.isLogin = true
       newState.username = username
       newState.id = id
+      newState.admin = admin
+      newState.avatar = avatar
       return newState
     case LOGOUT:
       newState.isLogin = false
       newState.username = ''
       newState.id = null
+      newState.admin = false
       return newState
     default:
       return state

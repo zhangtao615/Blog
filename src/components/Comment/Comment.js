@@ -9,33 +9,38 @@ const Comments = ({ id }) => {
   let comment = useRef('')
   let history = useHistory()
   const [btn, setBtn] = useState(true)
+  const [commentData, setCommentData] = useState([])
   const data = store.getState()
-  const CommentsData = [
-    {
-      actions: [<span key="comment-basic-reply-to">回复</span>,],
-      author: 'Han Solo',
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      content: (
-        <p>
-          We supply a series of design principles, practical patterns and high quality design
-          resources (Sketch and Axure), to help people create their product prototypes beautifully and
-          efficiently.
-        </p>
-      )
-    },
-    {
-      actions: [ <span key="comment-basic-reply-to">回复</span>],
-      author: 'Han Solo',
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      content: (
-        <p>
-          We supply a series of design principles, practical patterns and high quality design
-          resources (Sketch and Axure), to help people create their product prototypes beautifully and
-          efficiently.
-        </p>
-      ),
-    },
-  ];
+  useEffect(() => {
+    getComment()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  // 获取评论
+  const getComment = () => {
+    axios({
+      method: 'GET',
+      url: 'http://localhost:8080/api/user/getComment',
+      params: {
+        blogId: id
+      }
+    }).then(res => {
+      if (res.data.status === 'fail') {
+        message.error('评论加载失败')
+      } else {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        let arr = res.data.data
+        let temp = []
+        arr.map((item) => {
+         return temp.push({
+            author: item.author,
+            avatar: item.avatar,
+            content: (<p>{item.content}</p>)
+          })
+        })
+        setCommentData(temp)
+      }
+    })
+  }
   // 评论处理
   const getInputValue = () => {
     let commentVal  = comment.current.value
@@ -60,13 +65,14 @@ const Comments = ({ id }) => {
       data: {
         content: comment.current.value,
         author: data.username,
-        blogId: id,
-        createTime: Date.parse(new Date())
+        avatar: data.avatar,
+        blogId: id
       }
     }).then(res => {
       if (res.data.status === 'ok') {
         message.success('评论成功')
         comment.current.value = ''
+        getComment()
       } else {
         message.error('评论成功')
       }
@@ -91,17 +97,17 @@ const Comments = ({ id }) => {
       </div>
       <div className="comment-list">
         <List
-          header={`${CommentsData.length} replies`}
+          header={`${commentData.length} 评论`}
           itemLayout="horizontal"
-          dataSource={CommentsData}
+          dataSource={commentData}
           renderItem={item => (
             <li>
               <Comment
-                actions={item.actions}
                 author={item.author}
                 avatar={item.avatar}
                 content={item.content}
               />
+              <hr></hr>
             </li>
           )}
         />
