@@ -7,6 +7,7 @@ import './style.scss'
 const PersonalInfo = (props) => {
   const [name, setName] = useState(props.username)
   const [url, setUrl] = useState(props.avatar)
+  const { updateInfo } = props
   let nameRef = useRef('')
   let file = useRef({})
   let client = new OSS({
@@ -51,6 +52,7 @@ const PersonalInfo = (props) => {
       }).then(res => {
         if (res.data.status === 'ok') {
           message.success('信息更新成功')
+          updateInfo(url, name)
         } else {
           message.error('信息更新失败')
         }

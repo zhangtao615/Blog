@@ -17,10 +17,10 @@ class Others extends Component {
     store.subscribe(this.handleStoreChange)
   }
   render() {
-    const { isLogin, username, avatar } = this.state
+    const { isLogin, username, avatar, admin } = this.state
     return (
       <div className="others">
-        { username === 'admin' &&
+        { admin === 1 &&
           <Fragment>
             <div className="write-article">
               <Link to="/write">
@@ -52,12 +52,12 @@ class Others extends Component {
           </div>
           }
           { isLogin &&
-            <>
+            <Fragment>
               <Link to='/personal'>
                 <div className="visitor-personal visitor-item">个人中心</div>
               </Link>
               <div className="visitor-logout visitor-item" onClick={this.handleLogout}>退出登录</div>
-            </>
+            </Fragment>
           }
         </div>
       </div>
@@ -68,6 +68,7 @@ class Others extends Component {
   }
   handleLogout() {
     store.dispatch(logoutAction())
+    localStorage.removeItem('token')
     message.success('退出登录', 3)
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import SiderBar from './components/SiderBar/SiderBar';
 import Article from './components/Article/Article';
 import Others from './components/Others/Others';
@@ -8,6 +8,8 @@ import Login from './pages/Login/Login'
 import Reg from './pages/Reg/Reg'
 import Management from './pages/Management/Management'
 import Personal from './pages/Personal/Personal'
+import store from './store'
+import { getCurrentUser } from './store/actionCreators'
 import {
   BrowserRouter as Router,
   Route,
@@ -17,6 +19,10 @@ import avatar from './static/avatar.png'
 import './App.scss';
 
 const App = () => {
+  const data = store.getState()
+  if (!data.isLogin && localStorage.getItem('token')) {
+    store.dispatch(getCurrentUser(localStorage.getItem('token')))
+  }
   return (
       <div className="warpper">
         <Router>

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import store from '../../store'
-import { loginSuccessAction } from '../../store/actionCreators'
+import { getCurrentUser } from '../../store/actionCreators'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom' 
 import { message } from 'antd';
@@ -23,7 +23,7 @@ const Login = () => {
           password: crypPassword
         }
       }).then(res => {
-        resolve(res.data)
+        resolve(res)
       })
     })
       
@@ -33,9 +33,10 @@ const Login = () => {
     let pass = password.current.value
     if (name && pass) {
       const res = await handleLogin(name, pass)
-      if (res.status === 'ok') {
-        store.dispatch(loginSuccessAction(res))
-        message.success('登录成功', 3)
+      if (res.data.status === 'ok') {
+        localStorage.setItem('token', res.data.message)
+        store.dispatch(getCurrentUser(res.data.message))
+        message.success('登录成功', 1)
         history.push('/')
       } else {
         message.error('用户名或密码错误', 3)

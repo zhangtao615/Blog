@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { INIT_ARTICLE_LIST, SEARCH_ARTICLE, LOGIN_SUCCESS, LOGOUT } from './actionTypes'
+import { INIT_ARTICLE_LIST, SEARCH_ARTICLE, LOGIN_SUCCESS, LOGOUT, UPDATE_INFO } from './actionTypes'
 
 const defaultState = {
   article_list: [],
@@ -7,7 +7,8 @@ const defaultState = {
   username: '',
   id: null,
   admin: false,
-  avatar: ''
+  avatar: '',
+  token: localStorage.getItem('token') || ''
 }
 
 export default (state = defaultState, action) => {
@@ -20,7 +21,7 @@ export default (state = defaultState, action) => {
       newState.article_list = action.data
       return newState
     case LOGIN_SUCCESS:
-      const {username, id, admin, avatar} = action.data.data
+      const {username, id, admin, avatar} = action.data
       newState.isLogin = true
       newState.username = username
       newState.id = id
@@ -32,6 +33,11 @@ export default (state = defaultState, action) => {
       newState.username = ''
       newState.id = null
       newState.admin = false
+      newState.token = ''
+      return newState
+    case UPDATE_INFO:
+      newState.username = action.data.name
+      newState.avatar = action.data.url
       return newState
     default:
       return state
