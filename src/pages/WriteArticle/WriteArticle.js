@@ -6,6 +6,7 @@ import { parse } from 'html-ast-parse-stringify'
 import useKeypress from '../../hooks/useKeyPress'
 import transferDate from '../../utils/date'
 import './style.scss'
+import store from '../../store'
 import { message } from '_antd@4.13.0@antd';
 import Upload from '../../components/Upload/Upload'
 
@@ -22,6 +23,7 @@ const WriteArticle = () => {
   let articleTitle = useRef('') // 文章标题
   let tag = useRef('') // 文章标签
   let desc = useRef('') // 文章描述
+  const data = store.getState()
   // 获取标签列表
   const getTagList = () => {
     axios({
@@ -94,14 +96,18 @@ const WriteArticle = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enterPressed, inputActive])
   useEffect(() => {
-    // 初始化编辑器
-    editor = new E("#wang-editor")
-    editor.config.onchange = function (newHtml) {
-      setContent(newHtml)
-    }
-    editor.create()
-    return () => {
-      editor.destroy()
+    if (data.isLogin) {
+      // 初始化编辑器
+      editor = new E("#wang-editor")
+      editor.config.onchange = function (newHtml) {
+        setContent(newHtml)
+      }
+      editor.create()
+      return () => {
+        editor.destroy()
+      }
+    } else {
+      history.push('/')
     }
   }, [])
   return (

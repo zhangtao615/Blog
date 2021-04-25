@@ -56,7 +56,9 @@ class Others extends Component {
               <Link to='/personal'>
                 <div className="visitor-personal visitor-item">个人中心</div>
               </Link>
+              <Link to='/'>
               <div className="visitor-logout visitor-item" onClick={this.handleLogout}>退出登录</div>
+              </Link>
             </Fragment>
           }
         </div>

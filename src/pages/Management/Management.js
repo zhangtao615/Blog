@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { Button, message, Empty } from 'antd'
+import { useHistory } from 'react-router-dom'
+import store from '../../store'
 import axios from 'axios'
 import './style.scss'
 
 const Management = () => {
+  let history = useHistory()
   const [list, setList] = useState([])
-  useEffect (() => {
-    getBlogList()
+  const data = store.getState()
+  useEffect ( () => {
+    if (data.admin) {
+      getBlogList()
+    } else {
+      history.push('/')
+    }
   }, [])
   const getBlogList = () => {
     axios({
