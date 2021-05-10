@@ -7,7 +7,7 @@ import useKeypress from '../../hooks/useKeyPress'
 import transferDate from '../../utils/date'
 import './style.scss'
 import store from '../../store'
-import { message } from '_antd@4.13.0@antd';
+import { message } from 'antd';
 import Upload from '../../components/Upload/Upload'
 
 let editor = null

@@ -13,7 +13,7 @@ const PersonalInfo = (props) => {
   let client = new OSS({
     region: 'oss-cn-beijing',
     accessKeyId: 'LTAI5tALvdNoXMeFm1gDnYRP',
-    accessKeySecret: '8qgDWsEjZvVrbBC3zXvG23oXNML9ge',
+    accessKeySecret: '8qgDWs_EjZvVrbB_C3zXvG23_oXNML9ge',
     bucket: '7years-img'
   });
   const changeAvatar = () => {

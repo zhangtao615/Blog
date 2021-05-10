@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { List, message } from 'antd';
-import axios from '_axios@0.21.1@axios';
+import axios from 'axios';
 import './style.scss'
 
 const CommentList = (props) => {

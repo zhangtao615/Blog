@@ -3,7 +3,7 @@ import { searchArticleAction } from '../../store/actionCreators'
 import store from '../../store'
 import useKeypress from '../../hooks/useKeyPress'
 import './SiderBar.scss';
-import axios from '_axios@0.21.1@axios';
+import axios from 'axios';
 
 const SiderBar = () => {
   const [inputActive, setinputActive] = useState(false);

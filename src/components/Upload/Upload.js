@@ -1,7 +1,6 @@
 import React, { useRef, useState, Fragment } from 'react'
 import { message } from 'antd'
 import upload from '../../utils/uploadImg'
-import OSS from 'ali-oss'
 import './style.scss'
 
 const Upload = (props) => {

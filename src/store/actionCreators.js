@@ -1,6 +1,6 @@
 import { INIT_ARTICLE_LIST, IS_LOGIN, LOGOUT, LOGIN_SUCCESS, UPDATE_INFO } from './actionTypes'
 import axios from 'axios'
-import { message } from '_antd@4.13.0@antd'
+import { message } from 'antd'
 
 export const initArticleListAction = (data) => ({
   type: INIT_ARTICLE_LIST,

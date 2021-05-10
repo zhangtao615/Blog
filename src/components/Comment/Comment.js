@@ -3,7 +3,7 @@ import { Comment, List, message } from 'antd'
 import { useHistory } from 'react-router-dom'
 import store from '../../store'
 import './style.scss'
-import axios from '_axios@0.21.1@axios'
+import axios from 'axios'
 
 const Comments = ({ id }) => {
   let comment = useRef('')
